@@ -1,60 +1,295 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urban Err | Krung Nakhon Napha</title>
+    <meta name="description" content="เข้าร่วมตำนานบทใหม่ในกรุงนครนภา Minecraft Bedrock Roleplay Server ฝีมือคนไทย">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts: Kanit -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #0a0a0a; color: #eee; }
-        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.6), rgba(10,10,10,1)), url('https://images.unsplash.com/photo-1518005020251-58296b974671?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            background-color: #050505; 
+            color: #e5e5e5; 
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #eab308; }
+
+        /* Hero Background */
+        .hero-bg { 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(5,5,5,1)), 
+                        url('https://images.unsplash.com/photo-1563693977797-0f865f17849e?auto=format&fit=crop&w=1920&q=80'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+        }
+
+        .text-glow { text-shadow: 0 0 20px rgba(234, 179, 8, 0.5); }
+        .glass-panel { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
-        <div class="text-2xl font-bold tracking-tighter text-yellow-500">URBAN<span class="text-white">ERR</span></div>
-        <div class="space-x-6 hidden md:block">
-            <a href="#" class="hover:text-yellow-500 transition">หน้าหลัก</a>
-            <a href="#" class="hover:text-yellow-500 transition">ข้อมูลเมือง</a>
-            <a href="#" class="hover:text-yellow-500 transition">ระบบเศรษฐกิจ</a>
-            <a href="#" class="bg-yellow-500 text-black px-4 py-2 rounded-full font-bold hover:bg-yellow-400 transition">เข้าร่วมเล่น</a>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="text-3xl font-bold tracking-tighter text-yellow-500">URBAN<span class="text-white">ERR</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">เรื่องราว</a>
+                    <a href="#server-status" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">สถานะเซิร์ฟเวอร์</a>
+                    <a href="#register" class="text-yellow-500 hover:text-yellow-400 transition text-sm uppercase tracking-wider font-bold">ลงทะเบียน</a>
+                    <a href="#discord" class="bg-yellow-500 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-400 transition transform hover:scale-105 shadow-lg shadow-yellow-500/20">
+                        <i class="fa-brands fa-discord mr-2"></i>Discord
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-b border-gray-800 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2 text-center">
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-zinc-800 rounded-md">เรื่องราว</a>
+                <a href="#server-status" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-zinc-800 rounded-md">สถานะเซิร์ฟเวอร์</a>
+                <a href="#register" class="block px-3 py-3 text-base font-bold text-yellow-500 bg-zinc-800 rounded-md mt-4">ลงทะเบียนเข้าเมือง</a>
+            </div>
         </div>
     </nav>
 
-    <header class="hero-gradient h-[80vh] flex flex-col justify-center items-center text-center px-4">
-        <h1 class="text-5xl md:text-7xl font-bold mb-4">กรุงนครนภา</h1>
-        <p class="text-xl md:text-2xl text-gray-300 max-w-2xl">
-            สัมผัสประสบการณ์ Minecraft Roleplay ในบรรยากาศกรุงเทพฯ จำลองที่สมจริงที่สุด 
-            ระบบเศรษฐกิจครบวงจร และสังคมที่ขับเคลื่อนด้วยผู้เล่น
-        </p>
-        <div class="mt-8 flex gap-4">
-            <button class="bg-white text-black px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-200 transition">เริ่มเดินทาง</button>
-            <button class="border border-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-white hover:text-black transition">ดูแผนที่เมือง</button>
+    <!-- Hero Section -->
+    <header class="hero-bg min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto space-y-6 animate-fade-in-up">
+            <div class="inline-block px-4 py-1 border border-yellow-500/30 rounded-full bg-yellow-500/10 mb-4 backdrop-blur-sm">
+                <span class="text-yellow-400 text-sm font-semibold tracking-wide uppercase">Minecraft Bedrock v26.0+</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
+                กรุง<span class="text-yellow-500 text-glow">นครนภา</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
+                มหานครที่ไม่เคยหลับใหล... พื้นที่อิสระสำหรับ Roleplay ที่สมจริงที่สุดในไทย
+                ระบบเศรษฐกิจ การเมือง และสังคมที่คุณเป็นคนกำหนดเอง
+            </p>
+            
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <!-- ปุ่มเริ่มต้นการเดินทาง เลื่อนไปหาฟอร์ม -->
+                <button onclick="document.getElementById('register').scrollIntoView()" class="w-full sm:w-auto bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-400 transition shadow-[0_0_20px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2">
+                    <i class="fas fa-passport"></i> เริ่มต้นการเดินทาง
+                </button>
+                <button onclick="document.getElementById('server-status').scrollIntoView()" class="w-full sm:w-auto glass-panel text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition flex items-center justify-center gap-2">
+                    <i class="fas fa-server"></i> ดูสถานะเซิร์ฟเวอร์
+                </button>
+            </div>
         </div>
     </header>
 
-    <section class="py-20 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-        <div class="p-8 border border-gray-800 rounded-2xl bg-zinc-900/50">
-            <h3 class="text-4xl font-bold text-yellow-500 mb-2">100%</h3>
-            <p class="text-gray-400">สถาปัตยกรรมไทยร่วมสมัย</p>
-        </div>
-        <div class="p-8 border border-gray-800 rounded-2xl bg-zinc-900/50">
-            <h3 class="text-4xl font-bold text-yellow-500 mb-2">Unique</h3>
-            <p class="text-gray-400">ระบบอาชีพและเศรษฐกิจสมจริง</p>
-        </div>
-        <div class="p-8 border border-gray-800 rounded-2xl bg-zinc-900/50">
-            <h3 class="text-4xl font-bold text-yellow-500 mb-2">24/7</h3>
-            <p class="text-gray-400">เซิร์ฟเวอร์เสถียร ดูแลตลอดเวลา</p>
+    <!-- Server Status Section -->
+    <section id="server-status" class="py-12 -mt-20 relative z-20 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-zinc-900/90 backdrop-blur-xl border border-yellow-500/20 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-500/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left space-y-2">
+                        <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </span>
+                            <span class="text-green-500 font-bold tracking-widest text-sm uppercase">Server Online</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">เข้าร่วม <span class="text-yellow-500">Urban Err</span> วันนี้</h2>
+                        <p class="text-gray-400 text-sm md:text-base">Hosted with High Performance by <a href="https://minelan.in.th" target="_blank" class="text-blue-400 hover:underline">Minelan.in.th</a></p>
+                    </div>
+
+                    <div class="w-full md:w-auto flex flex-col gap-3">
+                        <div class="bg-black/50 p-1 rounded-xl border border-gray-700 flex flex-col sm:flex-row items-center gap-2">
+                            <div class="px-6 py-3 text-center sm:text-left">
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Server Address (IP)</p>
+                                <code id="serverIp" class="text-2xl font-mono font-bold text-yellow-400 tracking-wide">urbanerr.in.th</code>
+                            </div>
+                            <button onclick="copyIP()" class="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white p-4 rounded-lg transition duration-200 border-l border-gray-700 h-full group-hover:bg-yellow-500 group-hover:text-black">
+                                <i class="fas fa-copy text-xl"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-center md:justify-end gap-3 text-sm">
+                            <span class="bg-zinc-800 px-3 py-1 rounded text-gray-400 border border-zinc-700">Port: <span class="text-white font-mono">19132</span></span>
+                            <span class="bg-zinc-800 px-3 py-1 rounded text-gray-400 border border-zinc-700">Ver: <span class="text-white font-mono">v26.0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center border-t border-gray-900 text-gray-500 text-sm">
-        <p>&copy; 2026 Urban Err Project - Krung Nakhon Napha. All rights reserved.</p>
-        <p>&copy; 2024-2026 TWIPg</p>
-        <p class="mt-2">Developed by Fujiwara</p>
+    <!-- Lore / About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1 relative">
+                <div class="absolute inset-0 bg-yellow-500 blur-[100px] opacity-10"></div>
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80" alt="Bangkok City Vibe" class="relative rounded-2xl shadow-2xl border border-gray-800 rotate-2 hover:rotate-0 transition duration-500 w-full object-cover h-[500px]">
+            </div>
+            <div class="order-1 lg:order-2 space-y-6">
+                <h3 class="text-yellow-500 font-bold uppercase tracking-widest text-sm">The Story</h3>
+                <h2 class="text-4xl md:text-5xl font-bold">จากวิสัยทัศน์ สู่ความเป็นจริงในโลกสี่เหลี่ยม</h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    "กรุงนครนภา" ไม่ใช่แค่เมืองธรรมดา แต่คือโปรเจกต์จำลองระบบนิเวศของเมืองหลวงที่ซับซ้อน เราใส่ใจในทุกรายละเอียด ตั้งแต่ผังเมือง ระบบขนส่ง ไปจนถึงกลไกทางเศรษฐกิจ
+                </p>
+                <ul class="space-y-4 mt-4">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-yellow-500 mt-1 mr-3"></i>
+                        <span class="text-gray-300">ระบบกฎหมายและการเมืองที่ขับเคลื่อนโดยผู้เล่น</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-yellow-500 mt-1 mr-3"></i>
+                        <span class="text-gray-300">ย่านการค้าและที่อยู่อาศัยที่หลากหลาย</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Stats -->
+    <section class="py-20 bg-zinc-900/30 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
+                    <i class="fas fa-city text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2 text-white">Thai Architecture</h3>
+                    <p class="text-gray-400">สถาปัตยกรรมไทยร่วมสมัย</p>
+                </div>
+                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
+                    <i class="fas fa-coins text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2 text-white">Economy System</h3>
+                    <p class="text-gray-400">ระบบอาชีพและเศรษฐกิจสมจริง</p>
+                </div>
+                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
+                    <i class="fas fa-shield-alt text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2 text-white">Stable & Secure</h3>
+                    <p class="text-gray-400">โฮสต์เสถียร Ping ต่ำ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section (Google Form) -->
+    <section id="register" class="py-24 bg-zinc-900 relative">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="mb-10">
+                <span class="text-yellow-500 font-bold tracking-widest uppercase text-sm mb-2 block">Application Form</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">ลงทะเบียนพลเมือง <span class="text-yellow-500">นครนภา</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">กรอกข้อมูลให้ครบถ้วนเพื่อรับสิทธิ์ Whitelist และเริ่มต้นชีวิตใหม่ในเมืองของเรา</p>
+            </div>
+            
+            <!-- Google Form Embed Container -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-2xl border-4 border-yellow-500/20 mx-auto transform transition hover:scale-[1.01]" style="max-width: 640px;">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLScN-QILwYCkpTjKo2zPtLDRZYXCOWE5N30KOtcZ6NX8eeuh3g/viewform?embedded=true" 
+                    width="100%" 
+                    height="1487" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0"
+                    class="w-full"
+                >กำลังโหลด…</iframe>
+            </div>
+            
+            <div class="mt-8 text-gray-500 text-sm">
+                <p>ติดปัญหาการลงทะเบียน? ติดต่อทีมงานได้ที่ <a href="#discord" class="text-yellow-500 hover:underline">Discord</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <h4 class="text-2xl font-bold text-yellow-500 tracking-tighter">URBAN ERR</h4>
+                <p class="text-gray-500 text-sm mt-2">Krung Nakhon Napha Project</p>
+            </div>
+            
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-discord text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-tiktok text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube text-xl"></i></a>
+            </div>
+
+            <div class="text-center md:text-right text-gray-600 text-sm space-y-1">
+                <p>&copy; 2026 Urban Err Project. All rights reserved.</p>
+                <p>&copy; 2024-2026 TWIPg</p>
+                <p class="text-yellow-500/50">Developed by Fujiwara</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Copy IP Function
+        function copyIP() {
+            const ipText = 'urbanerr.in.th';
+            
+            navigator.clipboard.writeText(ipText).then(() => {
+                const btn = document.querySelector('button[onclick="copyIP()"]');
+                const originalContent = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fas fa-check text-green-400 text-xl"></i>';
+                btn.classList.add('bg-zinc-700');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.remove('bg-zinc-700');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
+
+
