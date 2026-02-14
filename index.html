@@ -29,10 +29,9 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #eab308; }
 
-        /* Hero Background */
         .hero-bg { 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(5,5,5,1)), 
-                        url('https://images.unsplash.com/photo-1563693977797-0f865f17849e?auto=format&fit=crop&w=1920&q=80'); 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(5,5,5,1)), 
+                        url('https://images.unsplash.com/photo-1627389955609-bc02320bca2d?q=80&w=2070&auto=format&fit=crop'); 
             background-size: cover; 
             background-position: center; 
             background-attachment: fixed;
@@ -40,6 +39,27 @@
 
         .text-glow { text-shadow: 0 0 20px rgba(234, 179, 8, 0.5); }
         .glass-panel { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+
+        /* Gallery Hover Effects */
+        .gallery-item img { transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* Loading Animation */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #eab308;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="antialiased">
@@ -48,36 +68,24 @@
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
                     <span class="text-3xl font-bold tracking-tighter text-yellow-500">URBAN<span class="text-white">ERR</span></span>
                 </div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#about" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">เรื่องราว</a>
-                    <a href="#server-status" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">สถานะเซิร์ฟเวอร์</a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#ai-assistant" class="text-yellow-400 hover:text-yellow-300 transition text-sm uppercase tracking-wider font-bold">✨ AI ช่วยออกแบบ</a>
+                    <a href="#gallery" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">อัลบั้มภาพ</a>
                     <a href="#register" class="text-yellow-500 hover:text-yellow-400 transition text-sm uppercase tracking-wider font-bold">ลงทะเบียน</a>
-                    <a href="#discord" class="bg-yellow-500 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-400 transition transform hover:scale-105 shadow-lg shadow-yellow-500/20">
+                    <a href="https://discord.gg/Yk2wGF8NZq" target="_blank" class="bg-yellow-500 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-400 transition transform hover:scale-105">
                         <i class="fa-brands fa-discord mr-2"></i>Discord
                     </a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-b border-gray-800 absolute w-full">
-            <div class="px-4 pt-2 pb-6 space-y-2 text-center">
-                <a href="#about" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-zinc-800 rounded-md">เรื่องราว</a>
-                <a href="#server-status" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-zinc-800 rounded-md">สถานะเซิร์ฟเวอร์</a>
-                <a href="#register" class="block px-3 py-3 text-base font-bold text-yellow-500 bg-zinc-800 rounded-md mt-4">ลงทะเบียนเข้าเมือง</a>
             </div>
         </div>
     </nav>
@@ -85,212 +93,151 @@
     <!-- Hero Section -->
     <header class="hero-bg min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
         <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
-        
         <div class="relative z-10 max-w-4xl mx-auto space-y-6 animate-fade-in-up">
-            <div class="inline-block px-4 py-1 border border-yellow-500/30 rounded-full bg-yellow-500/10 mb-4 backdrop-blur-sm">
-                <span class="text-yellow-400 text-sm font-semibold tracking-wide uppercase">Minecraft Bedrock v26.0+</span>
-            </div>
-            
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
                 กรุง<span class="text-yellow-500 text-glow">นครนภา</span>
             </h1>
-            
-            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
-                มหานครที่ไม่เคยหลับใหล... พื้นที่อิสระสำหรับ Roleplay ที่สมจริงที่สุดในไทย
-                ระบบเศรษฐกิจ การเมือง และสังคมที่คุณเป็นคนกำหนดเอง
-            </p>
-            
-            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <!-- ปุ่มเริ่มต้นการเดินทาง เลื่อนไปหาฟอร์ม -->
-                <button onclick="document.getElementById('register').scrollIntoView()" class="w-full sm:w-auto bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-400 transition shadow-[0_0_20px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2">
-                    <i class="fas fa-passport"></i> เริ่มต้นการเดินทาง
+            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto font-light">มหานครที่ไม่เคยหลับใหล... พื้นที่อิสระสำหรับ Roleplay ที่สมจริงที่สุด</p>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <button onclick="document.getElementById('ai-assistant').scrollIntoView({behavior: 'smooth'})" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold backdrop-blur-md border border-white/10 transition">
+                    ✨ เริ่มออกแบบตัวละคร
                 </button>
-                <button onclick="document.getElementById('server-status').scrollIntoView()" class="w-full sm:w-auto glass-panel text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition flex items-center justify-center gap-2">
-                    <i class="fas fa-server"></i> ดูสถานะเซิร์ฟเวอร์
+                <button onclick="document.getElementById('register').scrollIntoView({behavior: 'smooth'})" class="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-400 transition">
+                    ลงทะเบียนพลเมือง
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Server Status Section -->
-    <section id="server-status" class="py-12 -mt-20 relative z-20 px-4">
-        <div class="max-w-5xl mx-auto">
-            <div class="bg-zinc-900/90 backdrop-blur-xl border border-yellow-500/20 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-500/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
-                
-                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div class="text-center md:text-left space-y-2">
-                        <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
-                            <span class="relative flex h-3 w-3">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                            </span>
-                            <span class="text-green-500 font-bold tracking-widest text-sm uppercase">Server Online</span>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-white">เข้าร่วม <span class="text-yellow-500">Urban Err</span> วันนี้</h2>
-                        <p class="text-gray-400 text-sm md:text-base">Hosted with High Performance by <a href="https://minelan.in.th" target="_blank" class="text-blue-400 hover:underline">Minelan.in.th</a></p>
-                    </div>
-
-                    <div class="w-full md:w-auto flex flex-col gap-3">
-                        <div class="bg-black/50 p-1 rounded-xl border border-gray-700 flex flex-col sm:flex-row items-center gap-2">
-                            <div class="px-6 py-3 text-center sm:text-left">
-                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Server Address (IP)</p>
-                                <code id="serverIp" class="text-2xl font-mono font-bold text-yellow-400 tracking-wide">urbanerr.mcth.net</code>
-                            </div>
-                            <button onclick="copyIP()" class="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white p-4 rounded-lg transition duration-200 border-l border-gray-700 h-full group-hover:bg-yellow-500 group-hover:text-black">
-                                <i class="fas fa-copy text-xl"></i>
-                            </button>
-                        </div>
-                        <div class="flex justify-center md:justify-end gap-3 text-sm">
-                            <span class="bg-zinc-800 px-3 py-1 rounded text-gray-400 border border-zinc-700">Port: <span class="text-white font-mono">48152</span></span>
-                            <span class="bg-zinc-800 px-3 py-1 rounded text-gray-400 border border-zinc-700">Ver: <span class="text-white font-mono">v26.0</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lore / About Section -->
-    <section id="about" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="order-2 lg:order-1 relative">
-                <div class="absolute inset-0 bg-yellow-500 blur-[100px] opacity-10"></div>
-                <!-- ใช้รูปภาพที่คุณเลือกมาใส่ตรงนี้ -->
-                <img src="ภาพหน้าจอ (1940).png" alt="Urban Err - Krung Nakhon Napha" class="relative rounded-2xl shadow-2xl border border-gray-800 rotate-2 hover:rotate-0 transition duration-500 w-full object-cover h-[500px]">
-            </div>
-            <div class="order-1 lg:order-2 space-y-6">
-                <h3 class="text-yellow-500 font-bold uppercase tracking-widest text-sm">The Story</h3>
-                <h2 class="text-4xl md:text-5xl font-bold">จากวิสัยทัศน์ สู่ความเป็นจริงในโลกสี่เหลี่ยม</h2>
-                <p class="text-gray-400 text-lg leading-relaxed">
-                    "กรุงนครนภา" ไม่ใช่แค่เมืองธรรมดา แต่คือโปรเจกต์จำลองระบบนิเวศของเมืองหลวงที่ซับซ้อน เราใส่ใจในทุกรายละเอียด ตั้งแต่ผังเมือง ระบบขนส่ง ไปจนถึงกลไกทางเศรษฐกิจ
+    <!-- ✨ Gemini AI Assistant Section -->
+    <section id="ai-assistant" class="py-24 px-6 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h3 class="text-yellow-500 font-bold uppercase tracking-widest text-sm mb-2">Powered by Gemini AI</h3>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">ผู้ช่วยส่วนตัวพลเมือง ✨</h2>
+                <p class="text-gray-400 mb-8 leading-relaxed">
+                    ไม่รู้จะเล่นเป็นใครในเมืองใช่ไหม? ให้ AI ของเราช่วยแนะนำบทบาทและเขียนประวัติย่อให้คุณ 
+                    หรือจะให้ AI สรุปข่าวสารล่าสุดในเมืองนครนภาก็ได้!
                 </p>
-                <ul class="space-y-4 mt-4">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-yellow-500 mt-1 mr-3"></i>
-                        <span class="text-gray-300">ระบบกฎหมายและการเมืองที่ขับเคลื่อนโดยผู้เล่น</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-yellow-500 mt-1 mr-3"></i>
-                        <span class="text-gray-300">ย่านการค้าและที่อยู่อาศัยที่หลากหลาย</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+                
+                <div class="space-y-4">
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <label class="block text-sm text-gray-400 mb-2">คุณชอบแนวไหน? (เช่น: มาเฟียเงียบขรึม, พ่อค้าเจ้าเล่ห์, ตำรวจใจดี)</label>
+                        <input id="ai-prompt" type="text" placeholder="พิมพ์ไอเดียของคุณที่นี่..." class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-500 transition mb-4">
+                        <button onclick="generateCharacter()" id="gen-btn" class="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl hover:bg-yellow-400 transition flex items-center justify-center gap-2">
+                            <span>✨ สุ่มบทบาทและประวัติ</span>
+                        </button>
+                    </div>
 
-    <!-- Features Stats -->
-    <section class="py-20 bg-zinc-900/30 border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
-                    <i class="fas fa-city text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Thai Architecture</h3>
-                    <p class="text-gray-400">สถาปัตยกรรมไทยร่วมสมัย</p>
+                    <button onclick="summarizeNews()" id="news-btn" class="w-full border border-yellow-500/30 text-yellow-500 font-bold py-3 rounded-xl hover:bg-yellow-500/10 transition flex items-center justify-center gap-2">
+                        <span>📰 สรุปข่าวสารล่าสุดของเมือง</span>
+                    </button>
                 </div>
-                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
-                    <i class="fas fa-coins text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Economy System</h3>
-                    <p class="text-gray-400">ระบบอาชีพและเศรษฐกิจสมจริง</p>
-                </div>
-                <div class="p-8 border border-gray-800 rounded-2xl bg-black/40">
-                    <i class="fas fa-shield-alt text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Stable & Secure</h3>
-                    <p class="text-gray-400">โฮสต์เสถียร Ping ต่ำ</p>
+            </div>
+
+            <div id="ai-response-container" class="hidden animate-fade-in-up">
+                <div class="glass-panel p-8 rounded-3xl border-yellow-500/20 relative">
+                    <div class="absolute -top-4 -right-4 bg-yellow-500 text-black p-3 rounded-2xl rotate-12 shadow-xl">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <div id="ai-loading" class="hidden flex flex-col items-center py-12">
+                        <div class="spinner mb-4"></div>
+                        <p class="text-yellow-500 animate-pulse">Gemini กำลังประมวลผล...</p>
+                    </div>
+                    <div id="ai-content" class="prose prose-invert max-w-none">
+                        <!-- AI Content will be injected here -->
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Registration Section (Google Form) -->
-    <section id="register" class="py-24 bg-zinc-900 relative">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <div class="mb-10">
-                <span class="text-yellow-500 font-bold tracking-widest uppercase text-sm mb-2 block">Application Form</span>
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">ลงทะเบียนพลเมือง <span class="text-yellow-500">นครนภา</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">กรอกข้อมูลให้ครบถ้วนเพื่อรับสิทธิ์ Whitelist และเริ่มต้นชีวิตใหม่ในเมืองของเรา</p>
-            </div>
-            
-            <!-- Google Form Embed Container -->
-            <div class="bg-white rounded-xl overflow-hidden shadow-2xl border-4 border-yellow-500/20 mx-auto transform transition hover:scale-[1.01]" style="max-width: 640px;">
-                <iframe 
-                    src="https://docs.google.com/forms/d/e/1FAIpQLScN-QILwYCkpTjKo2zPtLDRZYXCOWE5N30KOtcZ6NX8eeuh3g/viewform?embedded=true" 
-                    width="80%" 
-                    height="600" 
-                    frameborder="0" 
-                    marginheight="0" 
-                    marginwidth="0"
-                    class="w-full"
-                >กำลังโหลด…</iframe>
-            </div>
-            
-            <div class="mt-8 text-gray-500 text-sm">
-                <p>ติดปัญหาการลงทะเบียน? ติดต่อทีมงานได้ที่ <a href="https://discord.gg/Yk2wGF8NZq" class="text-yellow-500 hover:underline">Discord</a></p>
+    <!-- Gallery (Simplified for clarity) -->
+    <section id="gallery" class="py-24 px-6 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto text-center mb-12">
+            <h2 class="text-4xl font-bold">อัลบั้มภาพบรรยากาศ</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+            <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+            <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+        </div>
+    </section>
+
+    <!-- Registration -->
+    <section id="register" class="py-24 bg-zinc-900 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-10">ลงทะเบียนพลเมือง</h2>
+            <div class="bg-white rounded-xl overflow-hidden shadow-2xl h-[600px]">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScN-QILwYCkpTjKo2zPtLDRZYXCOWE5N30KOtcZ6NX8eeuh3g/viewform?embedded=true" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-black py-12 border-t border-gray-900">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <h4 class="text-2xl font-bold text-yellow-500 tracking-tighter">URBAN ERR</h4>
-                <p class="text-gray-500 text-sm mt-2">Krung Nakhon Napha Project</p>
-            </div>
-            
-            <div class="flex space-x-6">
-                <a href="https://www.facebook.com/share/1APUXmj8oY/" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
-                <a href="https://discord.gg/Yk2wGF8NZq" class="text-gray-400 hover:text-white transition"><i class="fab fa-discord text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-tiktok text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube text-xl"></i></a>
-            </div>
-
-            <div class="text-center md:text-right text-gray-600 text-sm space-y-1">
-                <p>&copy; 2026 Urban Err Project. All rights reserved.</p>
-                <p>&copy; 2024-2026 TWIPg</p>
-                <p class="text-yellow-500/50">Developed by Fujiwara</p>
-            </div>
-        </div>
+    <footer class="bg-black py-12 text-center border-t border-white/5">
+        <p class="text-gray-500">&copy; 2026 Urban Err Project. Powered by Gemini API.</p>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const apiKey = ""; // API Key handled by environment
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        async function callGemini(prompt, systemPrompt) {
+            const container = document.getElementById('ai-response-container');
+            const content = document.getElementById('ai-content');
+            const loading = document.getElementById('ai-loading');
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-            });
-        });
+            container.classList.remove('hidden');
+            content.innerHTML = '';
+            loading.classList.remove('hidden');
 
-        // Copy IP Function
-        function copyIP() {
-            const ipText = 'urbanerr.mcth.net';
+            let retries = 0;
+            const maxRetries = 5;
             
-            navigator.clipboard.writeText(ipText).then(() => {
-                const btn = document.querySelector('button[onclick="copyIP()"]');
-                const originalContent = btn.innerHTML;
-                
-                btn.innerHTML = '<i class="fas fa-check text-green-400 text-xl"></i>';
-                btn.classList.add('bg-zinc-700');
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalContent;
-                    btn.classList.remove('bg-zinc-700');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] }
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('API Error');
+                    
+                    const data = await response.json();
+                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    loading.classList.add('hidden');
+                    content.innerHTML = `<div class="text-white whitespace-pre-line">${text}</div>`;
+                    return;
+                } catch (err) {
+                    retries++;
+                    await new Promise(r => setTimeout(r, Math.pow(2, retries) * 1000));
+                }
+            }
+            
+            loading.classList.add('hidden');
+            content.innerHTML = `<p class="text-red-400 text-center">เกิดข้อผิดพลาดในการเชื่อมต่อกับ Gemini กรุณาลองใหม่อีกครั้ง</p>`;
         }
+
+        function generateCharacter() {
+            const userIdea = document.getElementById('ai-prompt').value || "พลเมืองทั่วไป";
+            const systemPrompt = "คุณคือ AI ผู้ช่วยนักเขียนบท Roleplay สำหรับเซิร์ฟเวอร์ Minecraft ชื่อ Urban Err (กรุงนครนภา) หน้าที่ของคุณคือสร้างตัวละครที่น่าสนใจตามไอเดียที่ผู้ใช้ให้มา โดยต้องประกอบด้วย: ชื่อตัวละคร, อาชีพ, นิสัย, และเนื้อเรื่องย่อ (Background) ที่น่าติดตาม เขียนในสไตล์ที่ดูเท่และเป็นกันเอง";
+            const prompt = `ช่วยออกแบบตัวละคร Roleplay ในธีม: ${userIdea}`;
+            callGemini(prompt, systemPrompt);
+        }
+
+        function summarizeNews() {
+            const systemPrompt = "คุณคือ AI ผู้ประกาศข่าวประจำกรุงนครนภา (Urban Err) หน้าที่ของคุณคือสร้างข่าวสารที่น่าสนใจแบบ 'เรื่องสมมติ' ในเมือง (Fake News/RP News) เช่น การเปิดตัวห้างใหม่, กิจกรรมแข่งรถ, หรือการประกาศรับสมัครตำรวจ เพื่อให้ผู้เล่นรู้สึกตื่นเต้น เขียนในสไตล์ข่าวบันเทิง/อาชญากรรมในเมืองใหญ่";
+            const prompt = "ขอสรุปข่าวเด่นประจำวันในกรุงนครนภา 3 ข่าว";
+            callGemini(prompt, systemPrompt);
+        }
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        menuBtn.onclick = () => { /* Add logic if needed */ };
     </script>
 </body>
 </html>
-
-
