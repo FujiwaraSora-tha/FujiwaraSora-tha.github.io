@@ -74,7 +74,8 @@
 
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="#ai-assistant" class="text-yellow-400 hover:text-yellow-300 transition text-sm uppercase tracking-wider font-bold">✨ AI ช่วยออกแบบ</a>
-                    <a href="#gallery" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">อัลบั้มภาพ</a>
+                    <!-- เชื่อมลิงก์ไปที่ gallery.html -->
+                    <a href="gallery.html" class="text-gray-300 hover:text-yellow-400 transition text-sm uppercase tracking-wider">อัลบั้มภาพ</a>
                     <a href="#register" class="text-yellow-500 hover:text-yellow-400 transition text-sm uppercase tracking-wider font-bold">ลงทะเบียน</a>
                     <a href="https://discord.gg/Yk2wGF8NZq" target="_blank" class="bg-yellow-500 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-400 transition transform hover:scale-105">
                         <i class="fa-brands fa-discord mr-2"></i>Discord
@@ -152,15 +153,22 @@
         </div>
     </section>
 
-    <!-- Gallery (Simplified for clarity) -->
+    <!-- Gallery Preview Section -->
     <section id="gallery" class="py-24 px-6 bg-[#0a0a0a]">
         <div class="max-w-7xl mx-auto text-center mb-12">
-            <h2 class="text-4xl font-bold">อัลบั้มภาพบรรยากาศ</h2>
+            <h2 class="text-4xl font-bold mb-4">อัลบั้มภาพบรรยากาศ</h2>
+            <p class="text-gray-400 mb-8">ภาพบันทึกความทรงจำในกรุงนครนภา</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
             <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
             <div class="gallery-item rounded-xl overflow-hidden aspect-video"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+        </div>
+        <div class="text-center">
+            <!-- ปุ่มดูภาพเพิ่มเติมเชื่อมไปที่ gallery.html -->
+            <a href="gallery.html" class="inline-block border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black px-10 py-3 rounded-full font-bold transition">
+                ดูภาพทั้งหมดใน Gallery <i class="fas fa-external-link-alt ml-2"></i>
+            </a>
         </div>
     </section>
 
@@ -234,10 +242,6 @@
             const prompt = "ขอสรุปข่าวเด่นประจำวันในกรุงนครนภา 3 ข่าว";
             callGemini(prompt, systemPrompt);
         }
-
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        menuBtn.onclick = () => { /* Add logic if needed */ };
     </script>
 </body>
 </html>
