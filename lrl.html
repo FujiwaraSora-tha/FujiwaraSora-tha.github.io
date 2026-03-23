@@ -1,244 +1,566 @@
 <!DOCTYPE html>
-<html lang="th" class="scroll-smooth">
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urban Err | Krung Nakhon Napha</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Kanit -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons: Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>รายชื่อพลเมือง — กรุงนครนภา</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,200;0,300;0,400;0,700;1,300&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet" />
 
-    <style>
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            background-color: #050505; 
-            color: #e5e5e5; 
-            overflow-x: hidden;
-        }
-        
-        .hero-bg { 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(5,5,5,1)), 
-                        url('https://images.unsplash.com/photo-1627389955609-bc02320bca2d?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; 
-            background-position: center; 
-            background-attachment: fixed;
-        }
+  <style>
+    :root {
+      --bg:       #0e0f14;
+      --surface:  #13141c;
+      --card:     #181924;
+      --border:   rgba(255,255,255,0.07);
+      --pink:     #f4a7c3;
+      --lavender: #c4b5f4;
+      --sky:      #a8d8f0;
+      --mint:     #a8e6cf;
+      --gold:     #e8d5a3;
+      --text:     #e8e4f0;
+      --muted:    #6b6a80;
+    }
 
-        .glass-panel { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        
-        .resident-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        .resident-table tr { background: rgba(255,255,255,0.03); transition: all 0.3s ease; }
-        .resident-table tr:hover { background: rgba(234, 179, 8, 0.1); transform: scale(1.01); }
-        .resident-table td, .resident-table th { padding: 16px; text-align: left; vertical-align: middle; }
-        .resident-table th { color: #eab308; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; border-bottom: 1px solid rgba(234, 179, 8, 0.2); }
-        .resident-table td:first-child { border-radius: 12px 0 0 12px; }
-        .resident-table td:last-child { border-radius: 0 12px 12px 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-        .tag-role {
-            background: rgba(234, 179, 8, 0.1);
-            color: #eab308;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            margin: 2px;
-            display: inline-block;
-            border: 1px solid rgba(234, 179, 8, 0.2);
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sarabun', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-        @keyframes pulse-dot {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse-dot 2s infinite; }
-    </style>
+    /* noise */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.3;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,15,20,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.2em; color: var(--gold);
+      text-decoration: none; display: flex; flex-direction: column;
+    }
+    .nav-logo span {
+      font-family: 'Sarabun', sans-serif;
+      font-size: 0.6rem; font-weight: 300;
+      letter-spacing: 0.3em; color: var(--muted); margin-top: 1px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-link {
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      color: var(--muted); text-decoration: none;
+      text-transform: uppercase; transition: color 0.3s;
+    }
+    .nav-link:hover { color: var(--pink); }
+    .nav-register {
+      font-size: 0.72rem; letter-spacing: 0.15em;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--lavender); color: var(--lavender);
+      text-decoration: none; border-radius: 2px;
+      transition: all 0.3s; text-transform: uppercase;
+    }
+    .nav-register:hover { background: var(--lavender); color: var(--bg); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 9rem 2rem 5rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(196,181,244,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,181,244,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    .blob-1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(244,167,195,0.12) 0%, transparent 70%);
+      top: -80px; right: -80px;
+    }
+    .blob-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(196,181,244,0.1) 0%, transparent 70%);
+      bottom: 0; left: -60px; animation-delay: -4s;
+    }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(20px,15px) scale(1.04); }
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.6rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--mint);
+      border: 1px solid rgba(168,230,207,0.25);
+      padding: 0.3rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      letter-spacing: 0.08em; color: #fff; line-height: 1;
+      margin-bottom: 0.8rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-title em { font-style: normal; color: var(--pink); }
+    .hero-sub {
+      font-size: 0.82rem; color: var(--muted);
+      letter-spacing: 0.15em; font-weight: 300;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem 2.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .toolbar-left {
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .sync-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--mint);
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%,100%{opacity:1;transform:scale(1);}
+      50%{opacity:0.35;transform:scale(0.75);}
+    }
+    .sync-label {
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .sync-label strong { color: var(--mint); font-weight: 400; }
+
+    .btn-refresh {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted); font-family: 'Sarabun', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; cursor: pointer;
+      border-radius: 2px; transition: all 0.3s;
+    }
+    .btn-refresh:hover { border-color: var(--pink); color: var(--pink); }
+    .btn-refresh svg { width: 12px; height: 12px; transition: transform 0.5s; }
+    .btn-refresh.spinning svg { animation: spin 0.7s linear; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toolbar-right {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .toolbar-right span { font-family: 'Sarabun', sans-serif; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; margin-left: 0.4rem; vertical-align: middle; }
+
+    /* ── FILTER PILLS ── */
+    .filter-bar {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem 2rem;
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .filter-pill {
+      padding: 0.3rem 0.9rem;
+      font-size: 0.62rem; letter-spacing: 0.15em;
+      text-transform: uppercase; border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      cursor: pointer; transition: all 0.25s;
+      font-family: 'Sarabun', sans-serif;
+    }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--pink); color: var(--pink); background: rgba(244,167,195,0.06); }
+    .filter-pill[data-status="ยืนยันแล้ว"].active, .filter-pill[data-status="ทั่วไป"].active { border-color: var(--mint); color: var(--mint); background: rgba(168,230,207,0.06); }
+    .filter-pill[data-status="ตัวสำรอง"].active { border-color: var(--sky); color: var(--sky); background: rgba(168,216,240,0.06); }
+    .filter-pill[data-status="ผู้เชี่ยวชาญ"].active { border-color: var(--lavender); color: var(--lavender); background: rgba(196,181,244,0.06); }
+    .filter-pill[data-status="ไม่ผ่าน"].active, .filter-pill[data-status="ไม่เข้าแมพ"].active { border-color: #f4a7a7; color: #f4a7a7; background: rgba(244,167,167,0.06); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+    .table-container {
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse;
+    }
+    thead tr {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    thead th {
+      padding: 1rem 1.4rem;
+      font-size: 0.58rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--muted);
+      font-weight: 400; text-align: left;
+    }
+    thead th:first-child { color: var(--gold); width: 50px; text-align: center; }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      background: var(--card);
+      transition: background 0.2s, transform 0.2s;
+      animation: rowIn 0.4s ease both;
+    }
+    @keyframes rowIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:hover { background: #1e1f2e; transform: translateX(3px); }
+
+    tbody td {
+      padding: 1rem 1.4rem;
+      font-size: 0.82rem; color: var(--text);
+      vertical-align: middle;
+    }
+    tbody td:first-child {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; color: var(--muted);
+      text-align: center;
+    }
+    .td-name {
+      font-weight: 700; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .td-name-icon {
+      width: 28px; height: 28px; border-radius: 3px;
+      background: linear-gradient(135deg, rgba(244,167,195,0.2), rgba(196,181,244,0.2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; flex-shrink: 0; color: var(--pink);
+    }
+    .tag-role {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.6rem; letter-spacing: 0.1em;
+      border-radius: 2px;
+      border: 1px solid rgba(232,213,163,0.2);
+      color: var(--gold); margin: 2px;
+    }
+    .td-time {
+      font-size: 0.65rem; color: var(--muted);
+      font-style: italic; letter-spacing: 0.05em;
+    }
+
+    /* status badges */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      border-radius: 2px; border: 1px solid;
+    }
+    .badge-green  { color: var(--mint);     border-color: rgba(168,230,207,0.35); background: rgba(168,230,207,0.06); }
+    .badge-lav    { color: var(--lavender); border-color: rgba(196,181,244,0.35); background: rgba(196,181,244,0.06); }
+    .badge-sky    { color: var(--sky);      border-color: rgba(168,216,240,0.35); background: rgba(168,216,240,0.06); }
+    .badge-red    { color: #f4a7a7;         border-color: rgba(244,167,167,0.35); background: rgba(244,167,167,0.06); }
+    .badge-muted  { color: var(--muted);    border-color: var(--border);          background: transparent; }
+
+    /* empty / loading state */
+    .state-row td {
+      padding: 5rem 2rem !important;
+      text-align: center !important;
+      color: var(--muted) !important;
+    }
+    .state-icon {
+      font-size: 2rem; margin-bottom: 0.8rem;
+      display: block; opacity: 0.4;
+    }
+    .loading-ring {
+      width: 36px; height: 36px; margin: 0 auto 1rem;
+      border: 2px solid var(--border);
+      border-top-color: var(--pink);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.15em; color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .footer-copy {
+      font-size: 0.65rem; color: #2e2f42;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .page-hero { padding: 7rem 1.5rem 3rem; }
+      .toolbar, .filter-bar, .table-wrap { padding-left: 1rem; padding-right: 1rem; }
+      .td-time { display: none; }
+      thead th:nth-child(3) { display: none; }
+      tbody td:nth-child(3) { display: none; }
+    }
+  </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 h-20 flex items-center">
-        <div class="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
-            <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                <span class="text-3xl font-bold tracking-tighter text-yellow-500">URBAN<span class="text-white">ERR</span></span>
-            </div>
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="#residents" class="text-gray-300 hover:text-yellow-400 transition text-sm tracking-wider">รายชื่อพลเมือง</a>
-                <a href="#register" class="bg-yellow-500 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-400 transition transform hover:scale-105">ลงทะเบียน</a>
-            </div>
-        </div>
-    </nav>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      Urban Err
+      <span>กรุงนครนภา · Roleplay City</span>
+    </a>
+    <div class="nav-right">
+      <a href="index.html" class="nav-link">← หน้าหลัก</a>
+      <a href="index.html#register" class="nav-register">ลงทะเบียน</a>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-bg min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
-        <div class="relative z-10 max-w-4xl mx-auto space-y-6">
-            <h1 class="text-6xl md:text-8xl font-bold leading-tight text-white text-center">กรุง<span class="text-yellow-500">นครนภา</span></h1>
-            <p class="text-xl text-gray-300 font-light text-center">ตรวจสอบสถานะการลงทะเบียนพลเมือง Urban Err</p>
-            <div class="flex gap-4 justify-center mt-10">
-                <a href="#register" class="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-400 transition">ลงทะเบียนตอนนี้</a>
-                <a href="#residents" class="bg-white/10 text-white px-8 py-4 rounded-xl font-bold hover:bg-white/20 transition backdrop-blur-md">เช็ครายชื่อล่าสุด</a>
-            </div>
-        </div>
-    </header>
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="hero-inner">
+      <span class="hero-eyebrow">Citizen Registry · ทะเบียนพลเมือง</span>
+      <h1 class="hero-title">รายชื่อ<em>พลเมือง</em></h1>
+      <p class="hero-sub">ข้อมูลเชื่อมต่อ Google Sheets แบบ Real-time</p>
+    </div>
+  </div>
 
-    <!-- Resident List Section -->
-    <section id="residents" class="py-24 px-6 bg-[#050505]">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                <div>
-                    <h2 class="text-4xl font-bold mb-4 text-white text-left">รายชื่อพลเมือง<span class="text-yellow-500">นครนภา</span></h2>
-                    <p class="text-gray-400 text-lg text-left">ตรวจสอบรายชื่อ Gamertag และตำแหน่งงานที่ได้รับมอบหมาย</p>
-                </div>
-                <div class="glass-panel px-6 py-3 rounded-2xl flex items-center gap-4 border-yellow-500/20">
-                    <div class="flex items-center"><div class="status-dot bg-green-500"></div> <span class="text-sm text-gray-300" id="sync-status">รอการเชื่อมต่อ...</span></div>
-                    <button onclick="fetchResidents()" class="text-yellow-500 hover:text-yellow-400 transition text-sm font-bold bg-yellow-500/10 px-4 py-1 rounded-full"><i class="fas fa-sync-alt mr-1"></i> รีเฟรชข้อมูล</button>
-                </div>
-            </div>
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="sync-dot"></div>
+      <span class="sync-label" id="sync-status">กำลังดึงข้อมูล...</span>
+    </div>
+    <button class="btn-refresh" id="refresh-btn" onclick="fetchResidents()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+      </svg>
+      รีเฟรช
+    </button>
+    <div class="toolbar-right">
+      <span id="total-count">—</span>
+      <span>พลเมือง</span>
+    </div>
+  </div>
 
-            <div class="overflow-x-auto glass-panel p-4 rounded-3xl">
-                <table class="resident-table">
-                    <thead>
-                        <tr>
-                            <th class="w-16">#</th>
-                            <th>XBOX / Minecraft ID</th>
-                            <th>ตำแหน่งที่ทำ</th>
-                            <th>ลงทะเบียนเมื่อ</th>
-                            <th>สถานะระบบ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resident-list-body">
-                        <tr>
-                            <td colspan="5" class="text-center py-20">
-                                <i class="fas fa-spinner fa-spin text-4xl text-yellow-500 mb-4"></i>
-                                <p class="text-gray-500">กำลังดึงข้อมูลล่าสุดจากระบบ...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <button class="filter-pill active" data-status="all" onclick="setFilter(this,'all')">ทั้งหมด</button>
+    <button class="filter-pill" data-status="ยืนยันแล้ว" onclick="setFilter(this,'ยืนยันแล้ว')">ยืนยันแล้ว</button>
+    <button class="filter-pill" data-status="ทั่วไป" onclick="setFilter(this,'ทั่วไป')">ทั่วไป</button>
+    <button class="filter-pill" data-status="ตัวสำรอง" onclick="setFilter(this,'ตัวสำรอง')">ตัวสำรอง</button>
+    <button class="filter-pill" data-status="ผู้เชี่ยวชาญ" onclick="setFilter(this,'ผู้เชี่ยวชาญ')">ผู้เชี่ยวชาญ</button>
+    <button class="filter-pill" data-status="ไม่ผ่าน" onclick="setFilter(this,'ไม่ผ่าน')">ไม่ผ่าน</button>
+    <button class="filter-pill" data-status="ไม่เข้าแมพ" onclick="setFilter(this,'ไม่เข้าแมพ')">ไม่เข้าแมพ</button>
+  </div>
 
-    <!-- Registration Section -->
-    <section id="register" class="py-24 bg-zinc-900 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-10 text-white text-center">ลงทะเบียน<span class="text-yellow-500">พลเมืองใหม่</span></h2>
-            <div class="bg-white rounded-3xl overflow-hidden shadow-2xl h-[700px] border-4 border-yellow-500/20">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScN-QILwYCkpTjKo2zPtLDRZYXCOWE5N30KOtcZ6NX8eeuh3g/viewform?embedded=true" width="100%" height="100%" frameborder="0">กำลังโหลด...</iframe>
-            </div>
-        </div>
-    </section>
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Minecraft / Xbox ID</th>
+            <th>ตำแหน่ง</th>
+            <th>ลงทะเบียนเมื่อ</th>
+            <th>สถานะ</th>
+          </tr>
+        </thead>
+        <tbody id="resident-list-body">
+          <tr class="state-row">
+            <td colspan="5">
+              <div class="loading-ring"></div>
+              <p style="font-size:0.75rem; letter-spacing:0.15em;">กำลังดึงข้อมูลจากระบบ...</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-    <footer class="bg-black py-12 text-center border-t border-white/5">
-        <p class="text-gray-500">&copy; 2026 Urban Err Project. ข้อมูลเชื่อมต่อกับระบบ Google Sheets โดยตรง</p>
-    </footer>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Urban Err</div>
+    <p class="footer-copy">© 2026 กรุงนครนภา · ข้อมูลอัปเดตแบบ Real-time จาก Google Sheets</p>
+  </footer>
 
-    <script>
-        const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vR08WXqN6HwPyqgLHgUpw-j76kVNqUEoHlk9yEqZVfaREYvynuI2Vomv9fgMAJykcmEHdg_YnNvY3RW/pub?output=csv`;
+  <script>
+    const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vR08WXqN6HwPyqgLHgUpw-j76kVNqUEoHlk9yEqZVfaREYvynuI2Vomv9fgMAJykcmEHdg_YnNvY3RW/pub?output=csv`;
 
-        async function fetchResidents() {
-            const tbody = document.getElementById('resident-list-body');
-            const statusLabel = document.getElementById('sync-status');
-            
-            try {
-                const response = await fetch(SHEET_CSV_URL, { cache: "no-cache" });
-                if (!response.ok) throw new Error("Connection Error");
-                
-                const csvData = await response.text();
-                const rows = csvData.split(/\r?\n/).filter(row => row.trim() !== "");
-                
-                if (rows.length <= 1) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-10 text-gray-500">ไม่พบข้อมูลรายชื่อ</td></tr>';
-                    statusLabel.innerText = "เชื่อมต่อแล้ว (ว่าง)";
-                    return;
-                }
+    let allRows = [];
+    let currentFilter = 'all';
 
-                tbody.innerHTML = '';
-                statusLabel.innerText = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString();
+    function getStatusInfo(verifyStatus, typeOfPerson) {
+      if (!verifyStatus.includes('ยืนยัน')) {
+        return { text: 'ยังไม่ยืนยัน', cls: 'badge-muted' };
+      }
+      if (typeOfPerson.includes('ไม่เข้าแมพ'))
+        return { text: 'ไม่เข้าแมพ', cls: 'badge-red' };
+      if (typeOfPerson.includes('กรอกใหม่') || typeOfPerson.includes('ไม่ผ่าน'))
+        return { text: 'ไม่ผ่าน', cls: 'badge-red' };
+      if (typeOfPerson.includes('ตัวสำรอง') || typeOfPerson.includes('สำรอง'))
+        return { text: 'ตัวสำรอง', cls: 'badge-sky' };
+      if (typeOfPerson.includes('ผู้เชี่ยวชาญ') || typeOfPerson.includes('เชี่ยวชาญ'))
+        return { text: 'ผู้เชี่ยวชาญ', cls: 'badge-lav' };
+      if (typeOfPerson.includes('ทั่วไป'))
+        return { text: 'ทั่วไป', cls: 'badge-green' };
+      return { text: 'ยืนยันแล้ว', cls: 'badge-green' };
+    }
 
-                for(let i = 1; i < rows.length; i++) {
-                    const cols = rows[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                    const cleanCols = cols.map(c => c.replace(/^"|"$/g, '').trim());
+    function renderRows(rows) {
+      const tbody = document.getElementById('resident-list-body');
+      if (!rows.length) {
+        tbody.innerHTML = `<tr class="state-row"><td colspan="5">
+          <span class="state-icon">🔍</span>
+          <p style="font-size:0.75rem;letter-spacing:0.15em;">ไม่พบรายชื่อที่ตรงกับตัวกรอง</p>
+        </td></tr>`;
+        return;
+      }
+      tbody.innerHTML = '';
+      rows.forEach((r, i) => {
+        const status = getStatusInfo(r.verify, r.type);
+        const roles = r.roles
+          .split(',')
+          .map(s => s.trim()).filter(Boolean)
+          .map(s => `<span class="tag-role">${s}</span>`)
+          .join('');
+        const tr = document.createElement('tr');
+        tr.dataset.status = status.text;
+        tr.style.animationDelay = `${i * 0.03}s`;
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td><div class="td-name">
+            <div class="td-name-icon">⚙</div>
+            ${r.name}
+          </div></td>
+          <td>${roles || '<span style="color:var(--muted);font-size:0.7rem;">—</span>'}</td>
+          <td class="td-time">${r.time}</td>
+          <td><span class="badge ${status.cls}">${status.text}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-                    // Mapping ตามตำแหน่งในรูปภาพของคุณ
-                    const timestamp = cleanCols[0] || '-';
-                    const mcName = cleanCols[4] || 'ไม่ระบุชื่อ';
-                    const rawRoles = cleanCols[8] || 'พลเมือง';
-                    const typeOfPerson = cleanCols[10] || ''; // คอลัมน์ K (index 10) - เป็นคนแบบไหน
-                    const verifyStatus = cleanCols[12] || ''; // คอลัมน์ M (index 12) - ยืนยันหรือยัง
+    function setFilter(el, val) {
+      currentFilter = val;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      const filtered = val === 'all'
+        ? allRows
+        : allRows.filter(r => {
+            const s = getStatusInfo(r.verify, r.type);
+            return s.text === val || s.text.includes(val);
+          });
+      renderRows(filtered);
+    }
 
-                    // จัดการตำแหน่งที่ทำ
-                    const roles = rawRoles.split(',').map(role => 
-                        `<span class="tag-role">${role.trim()}</span>`
-                    ).join('');
+    async function fetchResidents() {
+      const statusEl = document.getElementById('sync-status');
+      const btn = document.getElementById('refresh-btn');
+      const countEl = document.getElementById('total-count');
 
-                    // --- NEW LOGIC (ดูที่ช่อง M เป็นหลักตามคำสั่ง) ---
-                    let statusText = "ยังไม่ยืนยัน";
-                    let statusClass = "bg-white/10 text-white border border-white/20";
+      btn.classList.add('spinning');
+      statusEl.innerHTML = 'กำลังดึงข้อมูล...';
 
-                    // ถ้าคอลัมน์ M มีคำว่า "ยืนยัน"
-                    if (verifyStatus.includes("ยืนยัน")) {
-                        
-                        // เช็คประเภทจากช่อง K เพื่อเปลี่ยนสี
-                        if (typeOfPerson.includes("ทั่วไป")) {
-                            statusText = "ทั่วไป / ยืนยันแล้ว";
-                            statusClass = "bg-green-500/20 text-green-400 border border-green-500/30";
-                        } 
-                        else if (typeOfPerson.includes("ไม่เข้าแมพ")) {
-                            statusText = "ไม่เข้าแมพ";
-                            statusClass = "bg-red-900/60 text-red-200 border border-red-800";
-                        }
-                        else if (typeOfPerson.includes("ตัวสำรอง") || typeOfPerson.includes("สำรอง")) {
-                            statusText = "ตัวสำรอง";
-                            statusClass = "bg-blue-500/20 text-blue-400 border border-blue-500/30";
-                        }
-                        else if (typeOfPerson.includes("ผู้เชี่ยวชาญ") || typeOfPerson.includes("เชี่ยวชาญ")) {
-                            statusText = "ผู้เชี่ยวชาญ";
-                            statusClass = "bg-purple-500/20 text-purple-400 border border-purple-500/30";
-                        }
-                        else if (typeOfPerson.includes("กรอกใหม่") || typeOfPerson.includes("ไม่ผ่าน")) {
-                            statusText = "ไม่ผ่าน / กรอกใหม่";
-                            statusClass = "bg-red-500/20 text-red-400 border border-red-500/30";
-                        }
-                        else {
-                            // ถ้าคอลัมน์ M ยืนยันแล้ว แต่ช่อง K ไม่ตรงเงื่อนไขข้างบน ให้ขึ้นเขียวไว้ก่อน
-                            statusText = "ยืนยันแล้ว";
-                            statusClass = "bg-green-500/20 text-green-400 border border-green-500/30";
-                        }
-                    }
+      const tbody = document.getElementById('resident-list-body');
+      tbody.innerHTML = `<tr class="state-row"><td colspan="5">
+        <div class="loading-ring"></div>
+        <p style="font-size:0.75rem;letter-spacing:0.15em;">กำลังโหลด...</p>
+      </td></tr>`;
 
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="text-gray-500 font-mono text-xs">${i}</td>
-                        <td class="font-bold text-white text-base">
-                            <i class="fas fa-id-card mr-2 text-yellow-500/40"></i>${mcName}
-                        </td>
-                        <td class="max-w-xs md:max-w-md flex flex-wrap gap-1">
-                            ${roles}
-                        </td>
-                        <td class="text-gray-400 text-[10px] font-mono">
-                            ${timestamp}
-                        </td>
-                        <td>
-                            <span class="text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider ${statusClass}">
-                                ${statusText}
-                            </span>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            } catch (err) {
-                statusLabel.innerText = "การเชื่อมต่อผิดพลาด";
-                console.error(err);
-            }
+      try {
+        const res = await fetch(SHEET_CSV_URL, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('fetch failed');
+        const csv = await res.text();
+        const rows = csv.split(/\r?\n/).filter(r => r.trim());
+
+        if (rows.length <= 1) {
+          statusEl.innerHTML = '<strong>เชื่อมต่อแล้ว</strong> · ว่างเปล่า';
+          countEl.textContent = '0';
+          renderRows([]);
+          return;
         }
 
-        window.onload = fetchResidents;
-    </script>
+        allRows = [];
+        for (let i = 1; i < rows.length; i++) {
+          const cols = rows[i].match(/(".*?"|[^",\n]+)(?=\s*,|\s*$)/g) || [];
+          const c = cols.map(x => x.replace(/^"|"$/g, '').trim());
+          allRows.push({
+            time:   c[0]  || '-',
+            name:   c[4]  || 'ไม่ระบุ',
+            roles:  c[8]  || 'พลเมือง',
+            type:   c[10] || '',
+            verify: c[12] || '',
+          });
+        }
+
+        countEl.textContent = allRows.length;
+        statusEl.innerHTML = `<strong>อัปเดตแล้ว</strong> · ${new Date().toLocaleTimeString('th-TH')}`;
+
+        const filtered = currentFilter === 'all'
+          ? allRows
+          : allRows.filter(r => {
+              const s = getStatusInfo(r.verify, r.type);
+              return s.text === currentFilter || s.text.includes(currentFilter);
+            });
+        renderRows(filtered);
+      } catch (err) {
+        statusEl.innerHTML = '<strong style="color:var(--pink)">เชื่อมต่อไม่ได้</strong>';
+        tbody.innerHTML = `<tr class="state-row"><td colspan="5">
+          <span class="state-icon">⚠</span>
+          <p style="font-size:0.75rem;letter-spacing:0.15em;">ดึงข้อมูลไม่สำเร็จ กด รีเฟรช เพื่อลองใหม่</p>
+        </td></tr>`;
+        console.error(err);
+      } finally {
+        setTimeout(() => btn.classList.remove('spinning'), 700);
+      }
+    }
+
+    window.onload = fetchResidents;
+  </script>
 </body>
 </html>
