@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mizunari SMP</title>
+</head>
+<body style="font-family: Arial; text-align:center;">
+
+<h1>Mizunari SMP</h1>
+
+<p>เช็คสถานะผู้เล่น</p>
+
+<input id="name" placeholder="username">
+<button onclick="check()">เช็ค</button>
+
+<p id="result"></p>
+
+<script>
+const API = "https://generation-durham-favourite-controversy.trycloudflare.com";
+
+async function check() {
+  const name = document.getElementById("name").value;
+
+  const res = await fetch(API + "/check?username=" + name);
+  const data = await res.json();
+
+  document.getElementById("result").innerText =
+    data.active ? "✔ ACTIVE" : "❌ EXPIRED";
+}
+</script>
+
+</body>
+</html>
