@@ -1,0 +1,6 @@
+{
+  "name": "MMO Portal & Player Dashboard",
+  "description": "An elegant, comprehensive player portal and game dashboard for modern MMO enthusiasts, featuring user profiles, cash shop, player trading markets, game wiki guides, leaderboards, and interactive simulated MMO features like Daily Rewards and Season Pass.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
